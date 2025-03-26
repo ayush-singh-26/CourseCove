@@ -8,14 +8,49 @@ import {useNavigate} from 'react-router-dom'
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [state, setState] = useState('Sign Up');
+  const navigate = useNavigate();
 
-  
+  const [registerUser,
+    { data: registerData,
+      error: registerError,
+      isLoading: registerIsLoading,
+      isSuccess: registerIsSuccess
+    }
+  ] = useRegisterUserMutation();
+  const [loginUser,
+    { data: loginData,
+      error: loginError,
+      isLoading: loginIsLoading,
+      isSuccess: loginIsSuccess
+    }
+  ] = useLoginUserMutation()
+  const onSubmit = async (data) => {
 
-  
+    const action = state === 'Sign Up' ? registerUser : loginUser;
+    await action(data);
+    navigate('/my-profile')
+  };
+
+  useEffect(() => {
+    if (registerError || loginError) {
+      toast.error("Something went wrong");
+    }
+    if (registerIsSuccess) {
+      toast.success("Registration successful!");
+    }
+    if (loginIsSuccess) {
+      toast.success("Login successful!");
+    }
+  }, [
+    registerError,
+    loginError,
+    registerIsSuccess,
+    loginIsSuccess
+  ])
 
   return (
 
-    <form className="min-h-[80vh] flex items-center" onSubmit={handleSubmit()}>
+    <form className="min-h-[80vh] flex items-center" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg">
         <p className="text-2xl font-semibold">{state === 'Sign Up' ? 'Create Account' : 'Login'}</p>
         <p>Please {state === 'Sign Up' ? 'sign up' : 'Login'} to book appointment</p>
@@ -72,8 +107,9 @@ function Login() {
 
         <button
           className="bg-primary text-white w-full py-2 rounded-md text-base"
+          disabled={registerIsLoading || loginIsLoading}
         >
-          {state === 'Sign Up' ? 'Create Account' : 'Login'}
+          {registerIsLoading || loginIsLoading ? 'Please wait...' : state === 'Sign Up' ? 'Create Account' : 'Login'}
         </button>
 
         {state === 'Sign Up' ? (
