@@ -16,10 +16,13 @@ app.use(cookieParser())
 
 
 import userRoute from './routes/user.routes.js';
-
+import courseRoute from './routes/course.routes.js';
+import lectureRoute from './routes/lecture.routes.js'
+import errorHandler from './utils/ErrorHandler.js';
 
 app.use('/api/v1/users', userRoute);
-
+app.use('/api/v1/courses', courseRoute);
+app.use('/api/v1/lectures',lectureRoute)
 
 
 
