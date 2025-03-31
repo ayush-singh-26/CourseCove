@@ -16,18 +16,41 @@ import Change_password from "./pages/Change_password";
 import { PersistGate } from "redux-persist/integration/react";
 import AddLecture from "./pages/admin/Lecture/AddLecture";
 import EditLecture from "./pages/admin/Lecture/EditLecture";
-import courseDetail from "./pages/student/courseDetail";
 import Courses from "./pages/student/Courses";
-
+import CourseDetail from "./pages/student/courseDetail";
+import CourseProgress from "./pages/student/CourseProgress";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        index: true, element: (
+          <>
+            <HeroSection />
+            <Courses />
+          </>
+        )
+      },
       { path: "login", element: <Login /> },
+      { path: "my-profile", element: <Profile /> },
+      { path: "change-password", element: <Change_password /> },
+      { path: "course-detail/:courseId", element: <CourseDetail /> },
+      { path: "course-progress/:courseId", element: <CourseProgress /> },
     ],
   },
-  
+  {
+    path: "/admin",
+    element: <Sidebar />,
+    children: [
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "course", element: <CourseTable /> },
+      { path: "course/create", element: <AddCourses /> },
+      { path: "course/:courseId", element: <EditCourses /> },
+      { path: 'course/:courseId/lecture', element: <AddLecture /> },
+      { path: 'course/:courseId/lecture/:lectureId', element: <EditLecture /> }
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
