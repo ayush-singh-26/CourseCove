@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Course from "./student/Course";
 import { useDeleteUserMutation, useLoadUserQuery } from "../Feature/api/authApi";
 
 const Profile = () => {
@@ -74,6 +75,47 @@ const Profile = () => {
             <p>{userData.gender}</p>
           )}
         </div>
+      </div>
+
+      <div>
+        {isEdit ? (
+          <button
+            className="border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all"
+            onClick={() => setIsEdit(false)}
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            className="border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all"
+            onClick={() => setIsEdit(true)}
+          >
+            Edit
+          </button>
+        )}
+      </div>
+      <div>
+      <button
+            className="border border-primary bg-red-600 text-white px-8 py-2 rounded-full hover:bg-red-800 hover:text-white transition-all"
+            onClick={()=>deleteUser()}
+          >
+            Delete Account
+          </button>
+      </div>
+      <div>
+        <h1 className="font-medium text-lg" >Courses you're enrolled in</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-5">
+          {
+            userData.enrolledCourses.length==0 ?(
+              <h1>You haven't enrolled yet</h1>
+            ):(
+              userData.enrolledCourses.map((course) => (
+                <Course key={course._id} course={course} />
+              ))
+            )
+          }
+        </div>
+
       </div>
     </div>
   );
