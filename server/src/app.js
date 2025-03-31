@@ -24,12 +24,14 @@ import lectureRoute from './routes/lecture.routes.js'
 import errorHandler from './utils/ErrorHandler.js';
 import mediaRoute from './routes/media.routes.js';
 import purchaseRoute from './routes/coursePurchase.routes.js'
+import progressRoute from './routes/courseProgress.routes.js'
 
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/courses', courseRoute);
 app.use('/api/v1/lectures',lectureRoute);
 app.use('/api/v1/media', mediaRoute);
 app.use('/api/v1/purchases',purchaseRoute)
+app.use('/api/v1/progress',progressRoute)
 
 
 
