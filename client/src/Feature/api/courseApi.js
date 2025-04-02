@@ -49,6 +49,28 @@ export const courseApi = createApi({
                 method:'PUT',
             })
         }),
+        getSearchCourses :builder.query({
+            query: ({searchQuery,catagories,sortByPrice})=>{
+                let queryString = `/search?query=${encodeURIComponent(searchQuery)}`
+
+                if(catagories?.length > 0){
+                    const catagoriesString = catagories.map(encodeURIComponent)
+                    queryString += `&categories=${catagoriesString}`
+                }
+
+                if(sortByPrice){
+                    queryString += `&sortByPrice=${encodeURIComponent(sortByPrice)}`
+                }
+
+                return (
+                    {
+                        url: queryString,
+                        method: 'GET',
+                    }
+                )
+
+            }
+        }),
 
     }),
 });
@@ -59,5 +81,6 @@ export const {
     useEditCourseMutation, 
     useGetCourseByIdQuery,
     usePublishCourseMutation,
-    useGetPublishedCourseQuery
+    useGetPublishedCourseQuery,
+    useGetSearchCoursesQuery
 } = courseApi;

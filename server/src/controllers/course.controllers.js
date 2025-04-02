@@ -143,6 +143,37 @@ const getPublishedCourse= asyncHandler(async (req, res) => {
     )
 })
 
+const searchCourse= asyncHandler(async (req, res) => {
+    const {query = "" , catagories=[],sortByPrice=""} = req.query;
+    const searchCriteria = {
+        isPublished : true,
+        $or: [
+            { courseTitle: { $regex: query, $options: 'i' } },
+            { courseDescription: { $regex: query, $options: 'i' } },
+            { category: { $in: catagories } },
+        ],
+    }
+
+    if(catagories.length > 0) {
+        searchCriteria.category = { $in: catagories }
+    }
+
+    const sortOptions ={};
+    if(sortByPrice === "low" ) {
+        sortOptions.coursePrice = 1;
+    }
+    else if(sortByPrice === "high" ) {
+        sortOptions.coursePrice = -1;
+    }
+
+    let courses = await Course.find(searchCriteria).populate({path:"creator",select:"fullname avatar"})
+
+    return res.status(200)
+    .json(
+        new ApiResponse(200, courses, "Search results fetched successfully")
+    )
+})
+
 
 
 export {
@@ -151,5 +182,6 @@ export {
     editCourses,
     getCourseById,
     togglePublishcourse,
-    getPublishedCourse
+    getPublishedCourse,
+    searchCourse,
 }

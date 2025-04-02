@@ -10,7 +10,7 @@ const getCourseProgress = asyncHandler(async (req, res) => {
 
     let courseProgress = await CourseProgress.findOne({ courseId, userId }).populate("courseId");
 
-    const courseDetails = await Course.findById(courseId).populate("lectures")
+    const courseDetails = await Course.findById(courseId).populate("lectures").populate("creator")
 
     console.log(courseDetails);
 
