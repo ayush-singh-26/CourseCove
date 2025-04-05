@@ -6,17 +6,17 @@ import { useGetPublishedCourseQuery } from "../../Feature/api/courseApi";
 
 const Courses = () => {
 
-  const [course,setCourse]= useState([])
-  const {data,isLoading,isError,isSuccess}=useGetPublishedCourseQuery();
+  const [course, setCourse] = useState([])
+  const { data, isLoading, isError, isSuccess } = useGetPublishedCourseQuery();
 
 
-  useEffect(()=>{
+  useEffect(() => {
     setCourse(data?.data)
   })
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto p-6">
+      <div className="max-w-6xl mx-auto p-6" id="#courses">
         <h2 className="font-bold text-3xl text-center mb-10">Our Courses</h2>
 
         {isLoading ? (

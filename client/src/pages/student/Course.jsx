@@ -11,7 +11,7 @@ const Course = ({ course }) => {
 
     return (
         <Link  
-            to={`course-detail/${course._id}`}
+            to={`/course-detail/${course._id}`}
             className="border border-gray-200 shadow-lg rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl bg-white"
         >
             <img
