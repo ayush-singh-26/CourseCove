@@ -51,8 +51,8 @@ function Sidebar() {
               <span className="text-indigo-600 text-sm font-medium">AD</span>
             </div>
             <div>
-              <p className="text-sm font-medium">{user.fullname}</p>
-              <p className="text-xs text-gray-500">{user.email}</p>
+              <p className="text-sm font-medium">{user?.fullname}</p>
+              <p className="text-xs text-gray-500">{user?.email}</p>
             </div>
           </div>
         </div>

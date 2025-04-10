@@ -86,6 +86,12 @@ export const authApi = createApi({
                 method: 'PUT',
                 body: inputData
             })
+        }),
+        getAllUsers : builder.query({
+            query : ()=>({
+                url:'getAllUsers',
+                method: 'GET'
+            })
         })
     }),
 })
@@ -97,4 +103,5 @@ export const {
     useChangePasswordMutation,
     useLogoutUserMutation,
     useDeleteUserMutation,
+    useGetAllUsersQuery
 } = authApi;

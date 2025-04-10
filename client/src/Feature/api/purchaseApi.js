@@ -23,7 +23,7 @@ export const purchaseApi=createApi({
         }),
         getPurchasedCourses: builder.query({
             query:()=>({
-                url:'/',
+                url:'/getAllPurchasedCourse',
                 method:'GET',
             })
         })
