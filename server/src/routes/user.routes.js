@@ -6,6 +6,7 @@ import {
     changeCurrentPassword,
     logoutUser,
     deleteUser,
+    getAllUsers,
 } from '../controllers/user.controllers.js'
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -19,6 +20,7 @@ router.route('/current-user').get(verifyJWT,getCurrentUser);
 router.route('/change-password').put(verifyJWT,changeCurrentPassword);
 router.route('/logout').post(verifyJWT,logoutUser);
 router.route('/delete-user').delete(verifyJWT,deleteUser);
+router.route('/getAllUsers').get(verifyJWT,getAllUsers);
 
 
 

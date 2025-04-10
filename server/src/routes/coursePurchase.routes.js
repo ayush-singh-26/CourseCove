@@ -6,6 +6,6 @@ const router= express.Router();
 
 router.route('/checkout/create-checkout-session').post(verifyJWT,createCheckoutSession);
 router.route('/course/:courseId/detail-with-status').get(verifyJWT,getCourseDetailWithPurchaseStatus);
-router.route('/').get(verifyJWT,getAllPurchasedCourse);
+router.route('/getAllPurchasedCourse').get(verifyJWT,getAllPurchasedCourse);
 
 export default router;

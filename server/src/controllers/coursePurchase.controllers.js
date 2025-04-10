@@ -36,7 +36,7 @@ const createCheckoutSession = async (req, res) => {
                             name: course.courseTitle,
                             images: [course.courseThumbnail],
                         },
-                        unit_amount: course.coursePrice * 100, 
+                        unit_amount: course.coursePrice * 100,
                     },
                     quantity: 1,
                 },
@@ -104,17 +104,22 @@ const stripeWebhook = async (req, res) => {
             const courseData = await Course.findById(purchaseData.courseId.toString());
 
             if (courseData && userData) {
-                courseData.enrolledStudents.push(userData);
-                await courseData.save();
+                if (!courseData.enrolledStudents.includes(userData._id)) {
+                    courseData.enrolledStudents.push(userData._id);
+                    await courseData.save();
+                }
 
-                userData.enrolledCourses.push(courseData._id);
-                await userData.save();
+                if (!userData.enrolledCourses.includes(courseData._id)) {
+                    userData.enrolledCourses.push(courseData._id);
+                    await userData.save();
+                }
 
                 purchaseData.status = "completed";
                 await purchaseData.save();
 
                 console.log("✅ Purchase marked as completed:", purchaseId);
             }
+
         } catch (error) {
             console.error("❌ Error processing webhook:", error.message);
         }
@@ -135,7 +140,7 @@ const getCourseDetailWithPurchaseStatus = async (req, res) => {
             .populate({ path: "creator" })
             .populate({ path: "lectures" });
 
-        const purchased = await CoursePurchase.findOne({ userId, courseId });
+        const purchased = await CoursePurchase.findOne({ userId, courseId, status: "completed" });
 
         if (!course) {
             return res.status(404).json({ message: "course not found!" });

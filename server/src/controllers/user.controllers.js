@@ -229,6 +229,15 @@ const forgot_Password = asyncHandler(async (req, res) => {
     }
 });
 
+const getAllUsers = asyncHandler(async (req, res) => {
+    const users = await User.find();
+
+    return res.status(200).json(
+        new ApiResponse(200, users, 'Users fetched successfully')
+    );
+});
+
+
 
 
 
@@ -672,5 +681,6 @@ export {
     sendEmail,
     sendVerificationCode,
     // forgot_Password,
-    reset_Password
+    reset_Password,
+    getAllUsers
 }
