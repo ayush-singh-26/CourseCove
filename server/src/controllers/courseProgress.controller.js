@@ -9,10 +9,8 @@ const getCourseProgress = asyncHandler(async (req, res) => {
     const userId = req.user.id;
 
     let courseProgress = await CourseProgress.findOne({ courseId, userId }).populate("courseId");
-
+    
     const courseDetails = await Course.findById(courseId).populate("lectures").populate("creator")
-
-    console.log(courseDetails);
 
     if (!courseDetails) {
         throw new ApiError(404, "Course not found")
@@ -32,7 +30,7 @@ const getCourseProgress = asyncHandler(async (req, res) => {
         new ApiResponse(200,
             {
                 courseDetails,
-                progress: courseProgress.progress,
+                progress: courseProgress.lectureProgress,
                 completed: courseProgress.completed
             })
     )
@@ -41,7 +39,6 @@ const getCourseProgress = asyncHandler(async (req, res) => {
 const updateLectureProgress = asyncHandler(async (req, res) => {
     const { courseId, lectureId } = req.params;
     const userId = req.user.id;
-
 
     let courseProgress = await CourseProgress.findOne({ courseId, userId })
 
@@ -54,7 +51,6 @@ const updateLectureProgress = asyncHandler(async (req, res) => {
         });
     }
 
-    
     const lectureIndex = courseProgress.lectureProgress.findIndex((lecture) => lecture.lectureId === lectureId)
     
     if (lectureIndex != -1) {
@@ -67,11 +63,9 @@ const updateLectureProgress = asyncHandler(async (req, res) => {
         });
     }
     
-    
     const lectureProgressLength = courseProgress.lectureProgress.filter((lectureProg) => lectureProg.viewed).length
     
     const course = await Course.findById(courseId);
-    console.log(course);
 
     if (course.lectures.length === lectureProgressLength) {
         courseProgress.completed = true;
@@ -88,24 +82,31 @@ const markAsCompleted = asyncHandler(async (req, res) => {
     const { courseId } = req.params;
     const userId = req.user.id;
 
-    const courseProgress = await CourseProgress.findOne({ courseId, userId })
+    const courseProgress = await CourseProgress.findOne({ courseId, userId });
 
     if (!courseProgress) {
-        throw new ApiError(404, "Course progress not found")
+        throw new ApiError(404, "Course progress not found");
     }
-
     console.log(courseProgress);
+    
 
-    courseProgress.lectureProgress.map((lectureProgress) => lectureProgress.viewed = !lectureProgress.viewed)
+    const newCompletedStatus = !courseProgress.completed;
+    
+    courseProgress.lectureProgress.forEach((lecture) => {
+        lecture.viewed = newCompletedStatus;
+    });
 
-    courseProgress.completed = !courseProgress.completed;
-
+    courseProgress.completed = newCompletedStatus;
     await courseProgress.save();
 
     return res.status(200).json(
-        new ApiResponse(200, courseProgress, "Course progress marked as completed successfully")
-    )
-})
+        new ApiResponse(
+            200, 
+            courseProgress, 
+            `Course progress marked as ${newCompletedStatus ? 'completed' : 'incomplete'} successfully`
+        )
+    );
+});
 
 export {
     getCourseProgress,

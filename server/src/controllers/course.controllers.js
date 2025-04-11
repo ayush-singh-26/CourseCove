@@ -87,7 +87,12 @@ const editCourses = asyncHandler(async (req, res) => {
 
 const getAllCourses = asyncHandler(async (req, res) => {
     const user = req.user;
-    const courses = await Course.find({ creator: user });
+
+    let courses;
+    if(user.role ==='Admin'){
+        courses= await Course.find().populate("creator");
+    }
+    else courses = await Course.find({ creator: user }).populate("creator");
 
     return res
         .status(200)
