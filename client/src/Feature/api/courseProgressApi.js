@@ -21,7 +21,7 @@ export const courseProgressApi = createApi({
             }),
         }),
         markAsCompleted: builder.mutation({
-            query:(courseId)=>({
+            query:({courseId})=>({
                 url: `${courseId}`,
                 method:'PUT',
             })

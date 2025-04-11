@@ -5,12 +5,13 @@ import { useLogoutUserMutation } from "../Feature/api/authApi";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { RoleProtectedRoute } from "./ProtectedRoutes";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
     const [userData,setUserData] = useState(null);
-    const user = useSelector((store) => store.auth.user?.data)
+    const user = useSelector((store) => store.auth.user)
 
     const [logout, {
         isSuccess: logoutIsSuccess,
@@ -18,8 +19,8 @@ const Navbar = () => {
     }] = useLogoutUserMutation();
 
     useEffect(()=>{
-        if(user){
-            setUserData(user)
+        if(user?.data){
+            setUserData(user?.data)
         }
     })
 
@@ -46,9 +47,10 @@ const Navbar = () => {
                                 <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
                                     <p onClick={() => navigate('/my-profile')} className="hover:text-black cursor-pointer">My Profile</p>
                                     <p onClick={() => navigate('/my-learning')} className="hover:text-black cursor-pointer">My Learning</p>
-                                    {userData.role === 'Admin' &&
+                                    <RoleProtectedRoute roles={['Admin', 'Instructor']}>
                                         <p onClick={() => navigate('/admin')} className="hover:text-black cursor-pointer">Admin</p>
-                                    }
+                                    </RoleProtectedRoute>
+                                    
                                     <p onClick={() => navigate('/change-password')} className="hover:text-black cursor-pointer">Change Password</p>
                                     <p onClick={() => logout()} className="hover:text-black cursor-pointer">Logout</p>
                                 </div>

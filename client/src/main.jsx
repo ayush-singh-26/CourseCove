@@ -6,7 +6,6 @@ import HeroSection from "./pages/student/HeroSection";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import AddCourses from "./pages/admin/Course/AddCourses";
-import Dashboard from "./pages/admin/Dashboard";
 import Sidebar from "./pages/admin/Sidebar";
 import CourseTable from "./pages/admin/Course/CourseTable";
 import EditCourses from "./pages/admin/Course/EditCourses";
@@ -19,6 +18,10 @@ import EditLecture from "./pages/admin/Lecture/EditLecture";
 import Courses from "./pages/student/Courses";
 import CourseDetail from "./pages/student/courseDetail";
 import CourseProgress from "./pages/student/CourseProgress";
+import SearchPage from "./pages/student/SearchPage";
+import { AuthenticatedUser, ProtectedRoutes, RoleProtectedRoute } from "./components/ProtectedRoutes";
+import DashBoard from "./pages/admin/DashBoard";
+import My_Learning from "./pages/student/My_Learning";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,18 +35,25 @@ const router = createBrowserRouter([
           </>
         )
       },
-      { path: "login", element: <Login /> },
-      { path: "my-profile", element: <Profile /> },
-      { path: "change-password", element: <Change_password /> },
+      { path: "login", element: <AuthenticatedUser><Login /></AuthenticatedUser> },
+      { path: "my-profile", element: <ProtectedRoutes><Profile /></ProtectedRoutes> },
+      { path: "change-password", element: <ProtectedRoutes><Change_password /></ProtectedRoutes> },
       { path: "course-detail/:courseId", element: <CourseDetail /> },
-      { path: "course-progress/:courseId", element: <CourseProgress /> },
+      { path: "course-progress/:courseId", element: <ProtectedRoutes><CourseProgress /></ProtectedRoutes> },
+      { path: "course/search", element: <SearchPage /> },
+      { path: "my-learning", element: <ProtectedRoutes><My_Learning /></ProtectedRoutes> },
+
     ],
   },
   {
     path: "/admin",
-    element: <Sidebar />,
+    element: (
+      <RoleProtectedRoute roles={['Admin', 'Instructor']}>
+        <Sidebar />,
+      </RoleProtectedRoute>
+    ),
     children: [
-      { path: "dashboard", element: <Dashboard /> },
+      { path: "dashboard", element: <DashBoard /> },
       { path: "course", element: <CourseTable /> },
       { path: "course/create", element: <AddCourses /> },
       { path: "course/:courseId", element: <EditCourses /> },

@@ -1,39 +1,49 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+import Loading_spinner from './Loader/Loading_spinner';
+import Loader from './Loader/Loader';
 
 const ProtectedRoutes = ({ children }) => {
-    const { user, isAuthenticated } = useSelector(store => store.auth)
+  const { user, isAuthenticated, loading } = useSelector((store) => store.auth);
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login" />
-    }
+  if (loading) {
+    return <Loader />;
+  }
 
-    return children
-}
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+};
+
 
 const AuthenticatedUser = ({ children }) => {
-    const { isAuthenticated } = useSelector(store => store.auth)
+  const { isAuthenticated } = useSelector(store => store.auth)
 
-    if (isAuthenticated) {
-        return <Navigate to="/" />
-    }
+  if (isAuthenticated) {
+    return <Navigate to="/" />
+  }
 
-    return children
+  return children
 }
 
 const RoleProtectedRoute = ({ children, roles }) => {
-    const { user, isAuthenticated } = useSelector(store => store.auth);
+  const { user, isAuthenticated, loading } = useSelector(store => store.auth);
 
-    if (!isAuthenticated) return <Navigate to="/login" />;
-    if (!roles.includes(user?.role)) return <Navigate to="/" />;
+  if (loading) {
+    return <Loader/>;
+  }
+  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!roles.includes(user?.data?.role)) return <Navigate to="/" />;
 
-    return children;
+  return children;
 };
 
 
 export {
-    ProtectedRoutes,
-    AuthenticatedUser,
-    RoleProtectedRoute
+  ProtectedRoutes,
+  AuthenticatedUser,
+  RoleProtectedRoute
 }

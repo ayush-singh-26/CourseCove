@@ -1,17 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { assets } from "../../../assets/assets";
 import { Link } from "react-router-dom";
+import { useGetCourseDetailWithStatusQuery } from "../../Feature/api/purchaseApi";
 
 const Course = ({ course }) => {
     const navigate = useNavigate();
-
-    if (!course) {
-        return <p className="text-center text-gray-500">Loading course...</p>;
-    }
+    console.log(course);
+    
+    const {data ,isLoading}=useGetCourseDetailWithStatusQuery(course._id);
+    console.log(data);
+    
+    const courseLink = data?.purchased ? `/course-progress/${course._id}`:`/course-detail/${course._id}`;
+    
+    
 
     return (
         <Link  
-            to={`/course-detail/${course._id}`}
+            to={courseLink}
             className="border border-gray-200 shadow-lg rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl bg-white"
         >
             <img

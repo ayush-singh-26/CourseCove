@@ -1,12 +1,14 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { MdInsertChartOutlined, MdOutlineDashboard } from "react-icons/md";
+import { MdOutlineDashboard } from "react-icons/md";
 import { GoBook } from "react-icons/go";
-import { FiSettings } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import Loader from "../../components/Loader/Loader";
 
 function Sidebar() {
-  const user=useSelector(store=>store.auth?.user?.data)  
+  const { user, isLoading } = useSelector(store => store.auth);
+
+  if (isLoading || !user?.data) return <Loader />;
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -15,7 +17,7 @@ function Sidebar() {
         <div className="mb-8">
           <h1 className="text-xl font-bold text-indigo-600">Admin Panel</h1>
         </div>
-        
+
         <ul className="space-y-2">
           <li>
             <NavLink 
@@ -44,15 +46,15 @@ function Sidebar() {
             </NavLink>
           </li>
         </ul>
-        
+
         <div className="mt-auto pt-5 border-t border-gray-200">
           <div className="flex items-center p-3 text-gray-600">
             <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
               <span className="text-indigo-600 text-sm font-medium">AD</span>
             </div>
             <div>
-              <p className="text-sm font-medium">{user?.fullname}</p>
-              <p className="text-xs text-gray-500">{user?.email}</p>
+              <p className="text-sm font-medium">{user?.data?.fullname}</p>
+              <p className="text-xs text-gray-500">{user?.data?.email}</p>
             </div>
           </div>
         </div>
