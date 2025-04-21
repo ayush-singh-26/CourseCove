@@ -16,7 +16,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import AddLecture from "./pages/admin/Lecture/AddLecture";
 import EditLecture from "./pages/admin/Lecture/EditLecture";
 import Courses from "./pages/student/Courses";
-import CourseDetail from "./pages/student/courseDetail";
+import CourseDetail from "./pages/student/CourseDetail";
 import CourseProgress from "./pages/student/CourseProgress";
 import SearchPage from "./pages/student/SearchPage";
 import { AuthenticatedUser, ProtectedRoutes, RoleProtectedRoute } from "./components/ProtectedRoutes";
