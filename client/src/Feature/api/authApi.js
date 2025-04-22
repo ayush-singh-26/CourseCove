@@ -5,7 +5,7 @@ import { userLoggedIn, userLoggedOut } from '../authSlice'
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000/api/v1/users/',
+        baseUrl: 'https://coursecove-fgew.onrender.com/api/v1/users/',
         credentials: 'include'
     }),
     endpoints: (builder) => ({

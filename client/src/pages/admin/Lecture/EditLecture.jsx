@@ -24,7 +24,7 @@ const EditLecture = () => {
             setMediaProgress(true);
 
             try {
-                const res = await axios.post('http://localhost:8000/api/v1/media/upload-video', formData, {
+                const res = await axios.post('https://coursecove-fgew.onrender.com/api/v1/media/upload-video', formData, {
                     onUploadProgress: ({ loaded, total }) => {
                         setUploadProgress(Math.round((loaded * 100) / total));
                     }

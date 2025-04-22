@@ -4,7 +4,7 @@ import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const purchaseApi=createApi({
     reducerPath: 'purchaseApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000/api/v1/purchases/',
+        baseUrl: 'https://coursecove-fgew.onrender.com/api/v1/purchases/',
         credentials: 'include',
     }),
     endpoints:(builder)=>({

@@ -4,7 +4,7 @@ export const courseApi = createApi({
     reducerPath: 'courseApi',
     tagTypes:["Refetch-creator-course","Refetch-lecture"],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000/api/v1/courses/',
+        baseUrl: 'https://coursecove-fgew.onrender.com/api/v1/courses/',
         credentials: 'include',
     }),
 
