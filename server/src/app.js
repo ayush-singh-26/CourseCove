@@ -8,7 +8,7 @@ const app=express();
 const __dirname = path.resolve();
 
 app.use(cors({
-    origin: '*',
+    origin: 'https://coursecove-fgew.onrender.com',
     credentials: true
 }))
 
