@@ -22,6 +22,7 @@
     "react-router-dom": "^7.1.3",
     "recharts": "^2.15.1",
     "redux-persist": "^6.0.0",
+    "server": "file:../server",
     "styled-components": "^6.1.17"
   },
   "devDependencies": {

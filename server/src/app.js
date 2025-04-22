@@ -1,8 +1,11 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import path from 'path'
 
 const app=express();
+
+const __dirname = path.resolve();
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -32,6 +35,13 @@ app.use('/api/v1/lectures',lectureRoute);
 app.use('/api/v1/media', mediaRoute);
 app.use('/api/v1/purchases',purchaseRoute)
 app.use('/api/v1/progress',progressRoute)
+
+
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+});
 
 
 
