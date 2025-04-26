@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { userLoggedIn, userLoggedOut } from '../authSlice'
+import BASE_URL from '../../constant';
 
 
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://coursecove-fgew.onrender.com/api/v1/users/',
+        baseUrl: `${BASE_URL}/api/v1/users/`,
         credentials: 'include'
     }),
     endpoints: (builder) => ({

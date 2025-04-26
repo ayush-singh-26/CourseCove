@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import BASE_URL from "../../constant";
 
 export const lectureApi = createApi({
     reducerPath: 'lectureApi',
     tagTypes:["Refetch-creator-course","Refetch-lecture"],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://coursecove-fgew.onrender.com/api/v1/lectures/',
+        baseUrl: `${BASE_URL}/api/v1/lectures/`,
         credentials: 'include',
     }),
 

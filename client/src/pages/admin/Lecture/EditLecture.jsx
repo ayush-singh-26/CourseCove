@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import Progress_bar from '../../../components/ui/Progress_bar';
 import { useDeleteLectureMutation, useEditLectureMutation, useGetLectureByIdQuery } from '../../../Feature/api/lectureApi';
 import { useNavigate, useParams } from 'react-router-dom';
+import BASE_URL from '../../../constant';
 
 const EditLecture = () => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const EditLecture = () => {
             setMediaProgress(true);
 
             try {
-                const res = await axios.post('https://coursecove-fgew.onrender.com/api/v1/media/upload-video', formData, {
+                const res = await axios.post(`${BASE_URL}/api/v1/media/upload-video`, formData, {
                     onUploadProgress: ({ loaded, total }) => {
                         setUploadProgress(Math.round((loaded * 100) / total));
                     }

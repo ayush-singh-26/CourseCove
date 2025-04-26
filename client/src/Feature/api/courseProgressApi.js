@@ -1,9 +1,10 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import BASE_URL from "../../constant";
 
 export const courseProgressApi = createApi({
     reducerPath : 'courseProgressApi',
     baseQuery : fetchBaseQuery({
-        baseUrl : 'https://coursecove-fgew.onrender.com/api/v1/progress/',
+        baseUrl : `${BASE_URL}/api/v1/progress/`,
         credentials : 'include'
     }),
 
