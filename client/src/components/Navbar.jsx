@@ -10,19 +10,22 @@ import { RoleProtectedRoute } from "./ProtectedRoutes";
 const Navbar = () => {
     const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
-    const [userData,setUserData] = useState(null);
+    const [userData, setUserData] = useState(null);
     const user = useSelector((store) => store.auth.user)
+    console.log(userData);
+
+
 
     const [logout, {
         isSuccess: logoutIsSuccess,
         error: logoutError
     }] = useLogoutUserMutation();
 
-    useEffect(()=>{
-        if(user?.data){
+    useEffect(() => {
+        if (user?.data) {
             setUserData(user?.data)
         }
-    })
+    }, [user])
 
     useEffect(() => {
         if (logoutIsSuccess) {
@@ -34,15 +37,17 @@ const Navbar = () => {
     }, [logoutIsSuccess, logoutError])
 
     return (
-        <div className="flex items-center justify-between text-sm py-4 border-b border-b-gray-400">
-            <a href="/" className="text-4xl text-purple-500 cursor-pointer">CourseCove</a>
+        <div className="flex items-center justify-between py-3 px-4 sm:px-6 border-b border-gray-300">
+            <a href="/" className="text-3xl sm:text-3xl font-semibold text-purple-600 hover:text-purple-700 transition-colors">
+                CourseCove
+            </a>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 sm:gap-6">
                 {
                     userData ?
                         <div className="flex items-center gap-2 cursor-pointer group relative">
-                            <img className="w-8 rounded-full" src={user.avatar} alt="" />
-                            <img className="w-2.5" src={assets.dropdown_icon} alt="" />
+                            <img className="w-8 rounded-full" src={userData?.avatar} alt="" />
+                            <img className="w-2.5 hover:rotate-180" src={assets.dropdown_icon} alt="" />
                             <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
                                 <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
                                     <p onClick={() => navigate('/my-profile')} className="hover:text-black cursor-pointer">My Profile</p>
@@ -50,25 +55,16 @@ const Navbar = () => {
                                     <RoleProtectedRoute roles={['Admin', 'Instructor']}>
                                         <p onClick={() => navigate('/admin')} className="hover:text-black cursor-pointer">Admin</p>
                                     </RoleProtectedRoute>
-                                    
+
                                     <p onClick={() => navigate('/change-password')} className="hover:text-black cursor-pointer">Change Password</p>
                                     <p onClick={() => logout()} className="hover:text-black cursor-pointer">Logout</p>
                                 </div>
                             </div>
                         </div> :
                         <button onClick={() => navigate('/login')} className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block" >CREATE ACCOUNT</button>
-
                 }
-                <img className="w-6 md:hidden" onClick={() => setShowMenu(true)} src={assets.menu_icon} alt="" />
-                {/* mobile menu */}
-                <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}>
-                    <div className="flex items-center justify-between px-5 py-6">
-                        <h2>CourseCove</h2>
-                        <img className="w-7" onClick={() => setShowMenu(false)} src={assets.cross_icon} alt="" />
-                    </div>
-                </div>
             </div>
-        </div>
+        </div >
     );
 };
 

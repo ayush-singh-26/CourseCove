@@ -7,7 +7,7 @@ import { Toaster } from 'react-hot-toast';
 function App() {
 
   return (
-    <div className="mx-4 sm:mx-[10%]">
+    <div className="">
       <Navbar />
       <Toaster position="top-right" reverseOrder={false} />
       <Outlet />
