@@ -8,7 +8,7 @@ const router= Router();
 
 router.route('/createCourse').post(verifyJWT,createCourse);
 router.route('/getAllCourses').get(verifyJWT,getAllCourses);
-router.route('/getPublishedCourse').get(verifyJWT,getPublishedCourse);
+router.route('/getPublishedCourse').get(getPublishedCourse);
 router.route('/editCourses/:id').put(verifyJWT,upload.single('courseThumbnail'),editCourses);
 router.route('/getCourseById/:id').get(verifyJWT,getCourseById);
 router.route('/:courseId').put(verifyJWT,togglePublishcourse);

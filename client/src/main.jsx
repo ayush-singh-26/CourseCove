@@ -12,7 +12,6 @@ import EditCourses from "./pages/admin/Course/EditCourses";
 import { Provider } from 'react-redux'
 import store from "./app/store";
 import Change_password from "./pages/Change_password";
-import { PersistGate } from "redux-persist/integration/react";
 import AddLecture from "./pages/admin/Lecture/AddLecture";
 import EditLecture from "./pages/admin/Lecture/EditLecture";
 import Courses from "./pages/student/Courses";
@@ -36,7 +35,7 @@ const router = createBrowserRouter([
         )
       },
       { path: "login", element: <AuthenticatedUser><Login /></AuthenticatedUser> },
-      { path: "my-profile", element: <ProtectedRoutes><Profile /></ProtectedRoutes> },
+      { path: "my-profile", element:<Profile/> },
       { path: "change-password", element: <ProtectedRoutes><Change_password /></ProtectedRoutes> },
       { path: "course-detail/:courseId", element: <CourseDetail /> },
       { path: "course-progress/:courseId", element: <ProtectedRoutes><CourseProgress /></ProtectedRoutes> },

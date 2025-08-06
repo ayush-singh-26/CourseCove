@@ -50,6 +50,8 @@ const CourseProgress = () => {
 
   const completedLecturesCount = courseProgressData?.data?.progress?.filter(lecture => lecture.viewed).length;
   const totalLectures = courseData?.lectures?.length;
+  console.log(completedLecturesCount,totalLectures);
+  
   const progressPercentage = Math.round((completedLecturesCount / totalLectures) * 100);
 
   const handleLectureProgress = async (lectureId) => {
@@ -90,13 +92,13 @@ const CourseProgress = () => {
       <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4'>
         <div className='flex-1'>
           <span className='inline-block px-3 py-1 text-sm font-semibold bg-indigo-100 text-indigo-800 rounded-full mb-2'>
-            {courseData?.category || 'Course'}
+            {courseData?.category}
           </span>
           <h1 className='text-3xl md:text-4xl font-bold text-gray-900 tracking-tight'>
-            {courseData?.courseTitle || 'Course Title'}
+            {courseData?.courseTitle}
           </h1>
           <p className='mt-2 text-gray-600 max-w-3xl'>
-            {courseData?.courseDescription || 'Master the skills with this comprehensive course'}
+            {courseData?.courseDescription}
           </p>
         </div>
 
@@ -123,7 +125,7 @@ const CourseProgress = () => {
                 />
               </svg>
               <span className='absolute inset-0 flex items-center justify-center text-xs font-bold text-indigo-700'>
-                {progressPercentage}%
+                {isNaN(progressPercentage) ? 0 : progressPercentage}%
               </span>
             </div>
             <span className='ml-2 text-sm font-medium text-gray-500'>Complete</span>
@@ -182,7 +184,7 @@ const CourseProgress = () => {
                     {completedLecturesCount} of {totalLectures} lectures completed
                   </span>
                   <span className='font-medium text-indigo-600'>
-                    {progressPercentage}%
+                    {isNaN(progressPercentage) ? 0 : progressPercentage}%
                   </span>
                 </div>
               </div>

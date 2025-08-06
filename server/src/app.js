@@ -8,9 +8,11 @@ const app=express();
 const __dirname = path.resolve();
 
 app.use(cors({
-    origin: 'https://coursecove-fgew.onrender.com',
-    credentials: true
-}))
+  origin: function (origin, callback) {
+    callback(null, origin); 
+  },
+  credentials: true
+}));
 
 import { stripeWebhook } from './controllers/coursePurchase.controllers.js';
 app.post('/stripe',express.raw({type:"application/json"}),stripeWebhook);

@@ -25,7 +25,6 @@ function Login() {
     }
   ] = useLoginUserMutation()
   const onSubmit = async (data) => {
-
     const action = state === 'Sign Up' ? registerUser : loginUser;
     await action(data);
     navigate('/my-profile')
