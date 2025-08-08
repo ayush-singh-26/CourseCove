@@ -22,7 +22,6 @@ const Profile = () => {
 
   return (
     <div className="mx-10 flex flex-col gap-6 p-6">
-      {/* Profile Header */}
       <div className="flex flex-col sm:flex-row items-center gap-6">
         <div className="relative group">
           <img

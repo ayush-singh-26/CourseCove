@@ -85,12 +85,28 @@ const editCourses = asyncHandler(async (req, res) => {
         )
 })
 
+const deleteCourses = asyncHandler(async (req, res) => {
+    const { courseId } = req.params;
+    console.log(courseId);
+
+
+    const course = await Course.findByIdAndDelete(courseId);
+
+    if (!course) {
+        throw new ApiError(401, "Course not found");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, {}, "Course deleted successfully")
+    )
+})
+
 const getAllCourses = asyncHandler(async (req, res) => {
     const user = req.user;
 
     let courses;
-    if(user.role ==='Admin'){
-        courses= await Course.find().populate("creator");
+    if (user.role === 'Admin') {
+        courses = await Course.find().populate("creator");
     }
     else courses = await Course.find({ creator: user }).populate("creator");
 
@@ -139,19 +155,19 @@ const togglePublishcourse = asyncHandler(async (req, res) => {
     }
 })
 
-const getPublishedCourse= asyncHandler(async (req, res) => {
+const getPublishedCourse = asyncHandler(async (req, res) => {
 
-    const course= await Course.find({isPublished :true}).populate({path:"creator",select:"fullname avatar"})
+    const course = await Course.find({ isPublished: true }).populate({ path: "creator", select: "fullname avatar" })
 
     return res.status(200).json(
         new ApiResponse(200, course, "Published courses fetched successfully")
     )
 })
 
-const searchCourse= asyncHandler(async (req, res) => {
-    const {query = "" , catagories=[],sortByPrice=""} = req.query;
+const searchCourse = asyncHandler(async (req, res) => {
+    const { query = "", catagories = [], sortByPrice = "" } = req.query;
     const searchCriteria = {
-        isPublished : true,
+        isPublished: true,
         $or: [
             { courseTitle: { $regex: query, $options: 'i' } },
             { courseDescription: { $regex: query, $options: 'i' } },
@@ -159,24 +175,24 @@ const searchCourse= asyncHandler(async (req, res) => {
         ],
     }
 
-    if(catagories.length > 0) {
+    if (catagories.length > 0) {
         searchCriteria.category = { $in: catagories }
     }
 
-    const sortOptions ={};
-    if(sortByPrice === "low" ) {
+    const sortOptions = {};
+    if (sortByPrice === "low") {
         sortOptions.coursePrice = 1;
     }
-    else if(sortByPrice === "high" ) {
+    else if (sortByPrice === "high") {
         sortOptions.coursePrice = -1;
     }
 
-    let courses = await Course.find(searchCriteria).populate({path:"creator",select:"fullname avatar"})
+    let courses = await Course.find(searchCriteria).populate({ path: "creator", select: "fullname avatar" })
 
     return res.status(200)
-    .json(
-        new ApiResponse(200, courses, "Search results fetched successfully")
-    )
+        .json(
+            new ApiResponse(200, courses, "Search results fetched successfully")
+        )
 })
 
 
@@ -189,4 +205,5 @@ export {
     togglePublishcourse,
     getPublishedCourse,
     searchCourse,
+    deleteCourses,
 }

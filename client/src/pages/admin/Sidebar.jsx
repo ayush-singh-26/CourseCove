@@ -12,7 +12,6 @@ function Sidebar() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
       <nav className="w-64 bg-white shadow-md p-5 border-r border-gray-200">
         <div className="mb-8">
           <h1 className="text-xl font-bold text-indigo-600">Admin Panel</h1>
@@ -59,10 +58,6 @@ function Sidebar() {
           </div>
         </div>
       </nav>
-
-      <main className="flex-1 p-8 overflow-auto">
-        <Outlet />
-      </main>
     </div>
   );
 }

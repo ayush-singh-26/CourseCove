@@ -6,7 +6,6 @@ import HeroSection from "./pages/student/HeroSection";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import AddCourses from "./pages/admin/Course/AddCourses";
-import Sidebar from "./pages/admin/Sidebar";
 import CourseTable from "./pages/admin/Course/CourseTable";
 import EditCourses from "./pages/admin/Course/EditCourses";
 import { Provider } from 'react-redux'
@@ -21,6 +20,8 @@ import SearchPage from "./pages/student/SearchPage";
 import { AuthenticatedUser, ProtectedRoutes, RoleProtectedRoute } from "./components/ProtectedRoutes";
 import DashBoard from "./pages/admin/DashBoard";
 import My_Learning from "./pages/student/My_Learning";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Navbar from "./components/Navbar";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,11 +49,12 @@ const router = createBrowserRouter([
     path: "/admin",
     element: (
       <RoleProtectedRoute roles={['Admin', 'Instructor']}>
-        <Sidebar />,
+        <Navbar/>
+        <AdminLayout/>
       </RoleProtectedRoute>
     ),
     children: [
-      { path: "dashboard", element: <DashBoard /> },
+      { path: 'dashboard', element: <DashBoard /> },
       { path: "course", element: <CourseTable /> },
       { path: "course/create", element: <AddCourses /> },
       { path: "course/:courseId", element: <EditCourses /> },

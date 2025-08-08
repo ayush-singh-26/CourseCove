@@ -39,7 +39,6 @@ function DashBoard() {
   }, [usersData, purchasedCourseData]);
 
   const processChartData = (purchases) => {
-    // Group by date and sum amounts for line chart
     const dailySales = purchases.reduce((acc, purchase) => {
       const date = new Date(purchase.createdAt).toLocaleDateString();
       if (!acc[date]) {
@@ -55,16 +54,14 @@ function DashBoard() {
     }));
     
 
-    // Group by course for bar chart
     const courseSales = purchases.reduce((acc, purchase) => {
       const courseName = purchase.courseId?.courseTitle || 'Unknown Course';
       if (!acc[courseName]) {
         acc[courseName] = 0;
       }
-      acc[courseName] += 1; // count of purchases
+      acc[courseName] += 1;
       return acc;
     }, {});
-    console.log(courseSales);
     
 
     const barChartData = Object.keys(courseSales).map(course => ({
@@ -73,7 +70,7 @@ function DashBoard() {
     }));
 
     setChartData({
-      lineData: lineChartData.slice(-7), // Last 7 days
+      lineData: lineChartData.slice(-7),
       barData: barChartData.sort((a, b) => b.purchases - a.purchases).slice(0, 5) // Top 5 courses
     });
   };
@@ -119,9 +116,6 @@ function DashBoard() {
               <MdPeople size={24} />
             </div>
           </div>
-          <p className="text-sm text-green-600 mt-2 flex items-center">
-            <MdTrendingUp className="mr-1" /> 5.7% from last month
-          </p>
         </div>
       </div>
 

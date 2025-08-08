@@ -38,6 +38,12 @@ export const courseApi = createApi({
                 body: formData,
             }),
         }),
+        deleteCourse: builder.mutation({
+            query: (courseId) => ({
+                url : `deleteCourse/${courseId}`,
+                method : 'DELETE',
+            })
+        }),
         getCourseById:builder.query({
             query:(courseId)=>({
                 url: `getCourseById/${courseId}`,
@@ -83,5 +89,6 @@ export const {
     useGetCourseByIdQuery,
     usePublishCourseMutation,
     useGetPublishedCourseQuery,
-    useGetSearchCoursesQuery
+    useGetSearchCoursesQuery,
+    useDeleteCourseMutation,
 } = courseApi;

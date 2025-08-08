@@ -19,7 +19,7 @@ const Navbar = () => {
 
     useEffect(() => {
         if (user?.data) {
-            setUserData(user.data);
+            setUserData(user?.data);
         } else {
             setUserData(null);
         }
