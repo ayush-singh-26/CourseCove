@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useCreateCheckoutSessionMutation, useGetCourseDetailWithStatusQuery } from '../../Feature/api/purchaseApi';
 import { useNavigate, useParams } from 'react-router-dom';
-import toast from 'react-hot-toast'
+import { toast } from "react-toastify";
 import ReactPlayer from 'react-player'
 import { CiCircleAlert } from "react-icons/ci";
 import { MdOutlinePlayCircle } from 'react-icons/md';

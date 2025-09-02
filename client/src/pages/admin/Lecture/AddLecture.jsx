@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useAddLectureMutation, useGetCourseLecturesQuery } from '../../../Feature/api/lectureApi';
 import { useNavigate, useParams } from 'react-router-dom';
 import Lecture from './Lecture';
-import toast from 'react-hot-toast';
+import { toast } from "react-toastify";
 import Loading_spinner from '../../../components/Loader/Loading_spinner';
 
 const AddLecture = () => {

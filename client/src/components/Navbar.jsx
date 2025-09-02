@@ -2,10 +2,9 @@ import { assets } from "../../assets/assets";
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useLogoutUserMutation } from "../Feature/api/authApi";
-import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { RoleProtectedRoute } from "./ProtectedRoutes";
-import { HiMenuAlt3, HiX } from 'react-icons/hi'
+import { toast } from "react-toastify";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -13,6 +12,7 @@ const Navbar = () => {
     const user = useSelector((store) => store.auth.user);
 
     const [logout, {
+        data : logoutData,
         isSuccess: logoutIsSuccess,
         error: logoutError
     }] = useLogoutUserMutation();
@@ -27,7 +27,7 @@ const Navbar = () => {
 
     useEffect(() => {
         if (logoutIsSuccess) {
-            toast.success('User logged out');
+            toast.success(logoutData?.message);
             setUserData(null);
             navigate('/');
         }

@@ -3,7 +3,7 @@ import { FiEdit } from 'react-icons/fi';
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { useDeleteLectureMutation } from '../../../Feature/api/lectureApi';
-import toast from 'react-hot-toast';
+import { toast } from "react-toastify";
 
 const Lecture = ({ lecture, courseId, index ,refetch}) => {
     const navigate = useNavigate();

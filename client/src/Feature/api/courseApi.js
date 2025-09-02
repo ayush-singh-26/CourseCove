@@ -42,7 +42,8 @@ export const courseApi = createApi({
             query: (courseId) => ({
                 url : `deleteCourse/${courseId}`,
                 method : 'DELETE',
-            })
+            }),
+            invalidatesTags:["Refetch-creator-course"]
         }),
         getCourseById:builder.query({
             query:(courseId)=>({

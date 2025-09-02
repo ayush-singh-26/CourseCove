@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useChangePasswordMutation } from '../Feature/api/authApi';
 import Loading_spinner from '../components/Loader/Loading_spinner'
-import toast from 'react-hot-toast'
+import { toast } from "react-toastify";
 const Change_password = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [changePassword,{

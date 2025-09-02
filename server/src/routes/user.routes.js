@@ -7,8 +7,11 @@ import {
     logoutUser,
     deleteUser,
     getAllUsers,
+    updateAccountDetails,
+    updateUserAvatar,
 } from '../controllers/user.controllers.js'
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 
 const router= Router();
@@ -21,7 +24,11 @@ router.route('/change-password').put(verifyJWT,changeCurrentPassword);
 router.route('/logout').post(verifyJWT,logoutUser);
 router.route('/delete-user').delete(verifyJWT,deleteUser);
 router.route('/getAllUsers').get(verifyJWT,getAllUsers);
-
+router.route('/updateAccountDetails').put(verifyJWT,updateAccountDetails);
+router.route('/updateAvatar').put(verifyJWT,
+  upload.single('avatar'), 
+  updateUserAvatar
+);
 
 
 export default router;

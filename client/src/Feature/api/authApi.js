@@ -17,7 +17,7 @@ export const authApi = createApi({
                 body: inputData
             })
         }),
-        
+
         loginUser: builder.mutation({
             query: (inputData) => ({
                 url: 'login',
@@ -26,8 +26,8 @@ export const authApi = createApi({
             }),
             async onQueryStarted(_, { queryFulfilled, dispatch }) {
                 try {
-                    const result = await queryFulfilled;                    
-                    dispatch(userLoggedIn( result.data ));                                        
+                    const result = await queryFulfilled;
+                    dispatch(userLoggedIn(result.data));
                 } catch (error) {
                     console.log(error);
                 }
@@ -35,15 +35,15 @@ export const authApi = createApi({
         }),
 
         loadUser: builder.query({
-            query:()=>({
-                url:'current-user',
-                method:'GET',
+            query: () => ({
+                url: 'current-user',
+                method: 'GET',
             }),
             async onQueryStarted(_, { queryFulfilled, dispatch }) {
                 try {
-                    const result = await queryFulfilled;                    
-                    dispatch(userLoggedIn( result.data )); 
-                                       
+                    const result = await queryFulfilled;
+                    dispatch(userLoggedIn(result.data));
+
                 } catch (error) {
                     console.log(error);
                     dispatch(userLoggedOut())
@@ -52,8 +52,8 @@ export const authApi = createApi({
         }),
 
         logoutUser: builder.mutation({
-            query:()=>({
-                url:'logout',
+            query: () => ({
+                url: 'logout',
                 method: 'post'
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
@@ -67,8 +67,8 @@ export const authApi = createApi({
         }),
 
         deleteUser: builder.mutation({
-            query:()=>({
-                url:'delete-user',
+            query: () => ({
+                url: 'delete-user',
                 method: 'delete'
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
@@ -81,19 +81,34 @@ export const authApi = createApi({
             }
         }),
 
-        changePassword : builder.mutation({
-            query : (inputData)=>({
+        changePassword: builder.mutation({
+            query: (inputData) => ({
                 url: 'change-password',
                 method: 'PUT',
                 body: inputData
             })
         }),
-        getAllUsers : builder.query({
-            query : ()=>({
-                url:'getAllUsers',
+        getAllUsers: builder.query({
+            query: () => ({
+                url: 'getAllUsers',
                 method: 'GET'
             })
-        })
+        }),
+        updateUser: builder.mutation({
+            query: (inputData) => ({
+                url: 'updateAccountDetails',
+                method: 'PUT',
+                body: inputData
+            })
+        }),
+        updateAvatar: builder.mutation({
+            query: (formData) => ({
+                url: "updateAvatar",
+                method: "PUT",
+                body: formData,
+            }),
+        }),
+
     }),
 })
 
@@ -104,5 +119,7 @@ export const {
     useChangePasswordMutation,
     useLogoutUserMutation,
     useDeleteUserMutation,
-    useGetAllUsersQuery
+    useGetAllUsersQuery,
+    useUpdateUserMutation,
+    useUpdateAvatarMutation
 } = authApi;

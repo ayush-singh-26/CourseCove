@@ -56,7 +56,7 @@ function CourseTable() {
                             <td className="border border-gray-300 px-4 py-2">{item.courseTitle}</td>
                             <td className="border border-gray-300 px-4 py-2">{item.coursePrice ? `$${item.coursePrice}` : "N/A"}</td>
                             <td className="border border-gray-300 px-4 py-2">{item.isPublished ? "Published" : "Not Published"}</td>
-                            <td className="border border-gray-300 px-4 py-2">{item.creator.fullname} ({item.creator.role})</td>
+                            <td className="border border-gray-300 px-4 py-2">{item.creator?.fullname} ({item.creator?.role})</td>
                             <td className="border border-gray-300 px-4 py-2 text-center">
                                 <button onClick={() => handleEditClick(item._id)} className="text-blue-500">
                                     <FiEdit />

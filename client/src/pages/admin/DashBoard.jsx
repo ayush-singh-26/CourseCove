@@ -11,7 +11,8 @@ import {
   Bar,
   ResponsiveContainer
 } from "recharts";
-import { MdAttachMoney, MdShoppingCart, MdPeople, MdTrendingUp } from "react-icons/md";
+import { MdShoppingCart, MdPeople, MdTrendingUp } from "react-icons/md";
+import {FaRupeeSign} from 'react-icons/fa'
 import { useGetAllUsersQuery } from "../../Feature/api/authApi";
 import { useGetPurchasedCoursesQuery } from "../../Feature/api/purchaseApi";
 
@@ -98,10 +99,10 @@ function DashBoard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-500">Total Revenue</p>
-              <p className="text-2xl font-bold text-gray-800">${totalRevenue.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-gray-800">₹{totalRevenue.toFixed(2)}</p>
             </div>
             <div className="p-3 rounded-full bg-green-100 text-green-600">
-              <MdAttachMoney size={24} />
+              <FaRupeeSign size={24} />
             </div>
           </div>
         </div>

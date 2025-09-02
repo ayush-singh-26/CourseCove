@@ -9,10 +9,12 @@ const Courses = () => {
   const [course, setCourse] = useState([])
   const { data, isLoading, isError, isSuccess } = useGetPublishedCourseQuery();
 
-
   useEffect(() => {
     setCourse(data?.data)
   })
+
+  console.log(course);
+  
 
   return (
     <div className="bg-gray-50 min-h-screen">

@@ -4,13 +4,10 @@ import { Link } from "react-router-dom";
 import { useGetCourseDetailWithStatusQuery } from "../../Feature/api/purchaseApi";
 
 const Course = ({ course }) => {
-  const navigate = useNavigate();
-  console.log(course);
-
-  const { data, isLoading } = useGetCourseDetailWithStatusQuery(course._id);
-  console.log(data);
-
+  
+  const { data, isLoading } = useGetCourseDetailWithStatusQuery(course._id);  
   const courseLink = data?.purchased ? `/course-progress/${course._id}` : `/course-detail/${course._id}`;
+  console.log(data);
 
 
 
@@ -21,15 +18,15 @@ const Course = ({ course }) => {
     >
       <img
         className="w-full h-48 object-cover bg-gray-100"
-        src={course.courseThumbnail}
-        alt={course.courseTitle}
+        src={course?.courseThumbnail}
+        alt={course?.courseTitle}
       />
       <div className="p-4 space-y-2">
         <p className="text-gray-900 text-lg font-semibold line-clamp-1">
           {course.courseTitle}
         </p>
         <p className="text-gray-600 text-sm font-medium line-clamp-1">
-          By {course.creator.fullname}
+          By {data?.course?.creator?.fullname}
         </p>
 
         <p className= "text-sm line-clamp-2">

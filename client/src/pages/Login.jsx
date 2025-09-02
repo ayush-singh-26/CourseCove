@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLoginUserMutation, useRegisterUserMutation } from "../Feature/api/authApi";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import {useNavigate} from 'react-router-dom'
 
 function Login() {
@@ -24,10 +24,13 @@ function Login() {
       isSuccess: loginIsSuccess
     }
   ] = useLoginUserMutation()
+
+  console.log(loginData);
+  
   const onSubmit = async (data) => {
     const action = state === 'Sign Up' ? registerUser : loginUser;
     await action(data);
-    navigate('/my-profile')
+    // navigate('/my-profile')
   };
 
   useEffect(() => {
@@ -35,16 +38,18 @@ function Login() {
       toast.error("Something went wrong");
     }
     if (registerIsSuccess) {
-      toast.success("Registration successful!");
+      toast.success(registerData?.message || "Registration successful!");
     }
     if (loginIsSuccess) {
-      toast.success("Login successful!");
+      toast.success(loginData?.message || "Login successful!");
     }
   }, [
     registerError,
     loginError,
     registerIsSuccess,
-    loginIsSuccess
+    loginIsSuccess,
+    loginData,
+    registerData
   ])
 
   return (

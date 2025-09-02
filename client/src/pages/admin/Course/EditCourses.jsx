@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDeleteCourseMutation, useEditCourseMutation, useGetCourseByIdQuery, usePublishCourseMutation } from "../../../Feature/api/courseApi";
-import toast, { Toaster } from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import Loading_spinner from "../../../components/Loader/Loading_spinner";
+import WarningModal from "../../../components/ui/WarningModal";
 
 function EditCourses() {
 
@@ -68,6 +69,8 @@ function EditCourses() {
 
     try {
       await editCourses({ courseId, formData });
+      navigate('/admin/course');
+      toast.success('Course updated successfully')
     } catch (error) {
       toast.error(error.message);
     }
@@ -98,18 +101,19 @@ function EditCourses() {
 
   useEffect(() => {
     if (deleteCoursesSuccess) {
-      toast.success("Course deleted!");
+      console.log(deleteCoursesSuccess);
+      
+      toast.success("Course deleted successfully!");
       navigate(`/admin/course`);
     }
     if (deleteCoursesError) {
       toast.error("Failed to delete lecture!");
     }
-  }, [deleteCoursesSuccess, deleteCoursesError]);
+  }, [deleteCoursesSuccess, deleteCoursesError,navigate]);
 
 
   return (
     <div className="p-6">
-      <Toaster />
       <div className="shadow-2xl rounded-lg p-6 bg-white">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-bold">Add detailed information regarding course</h1>
@@ -126,13 +130,9 @@ function EditCourses() {
                 <button type="button" onClick={() => publishStatusHandler(courseByIdData?.data?.isPublished ? "false" : "true")} className="px-4 py-2 bg-white rounded text-black mx-2 shadow-md hover:bg-gray-100">
                   {courseByIdData?.data?.isPublished ? "Unpublish" : "Publish"}
                 </button>
-                <button onClick={() => deleteCourses(courseId)} className="px-4 py-2 bg-black rounded text-white mx-2 shadow-md hover:bg-gray-800">
-                  {
-                    deleteCoursesLoading ? <Loading_spinner/> : "Remove Course"
-                  }
-                  </button>
-              </div>
+                <WarningModal onConfirm={()=>deleteCourses(courseId)} loading={deleteCoursesLoading} text={'Remove Course'} />
             </div>
+          </div>
 
             <div className="flex flex-col space-y-4">
               <div className="flex flex-col">

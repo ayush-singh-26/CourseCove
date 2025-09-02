@@ -11,7 +11,7 @@ router.route('/getAllCourses').get(verifyJWT,getAllCourses);
 router.route('/getPublishedCourse').get(getPublishedCourse);
 router.route('/editCourses/:id').put(verifyJWT,upload.single('courseThumbnail'),editCourses);
 router.route('/deleteCourse/:courseId').delete(verifyJWT,deleteCourses);
-router.route('/getCourseById/:id').get(verifyJWT,getCourseById);
+router.route('/getCourseById/:courseId').get(verifyJWT,getCourseById);
 router.route('/:courseId').put(verifyJWT,togglePublishcourse);
 router.route('/search').get(verifyJWT,searchCourse);
 

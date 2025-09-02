@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Switch from '../../../components/ui/Switch';
 import axios from 'axios';
-import toast from 'react-hot-toast';
+import { toast } from "react-toastify";
 import Progress_bar from '../../../components/ui/Progress_bar';
 import { useDeleteLectureMutation, useEditLectureMutation, useGetLectureByIdQuery } from '../../../Feature/api/lectureApi';
 import { useNavigate, useParams } from 'react-router-dom';
 import BASE_URL from '../../../constant';
+import WarningModal from '../../../components/ui/WarningModal'
 
 const EditLecture = () => {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ const EditLecture = () => {
                 });
                 if (res.data.success) {
                     setUploadVideoInfo({ videoUrl: res.data.data.url, publicId: res.data.data.public_id });
-                    toast.success(res.data.message);
+                    toast.success("Video uploaded successfully");
                 }
             } catch (err) {
                 console.error(err);
@@ -99,13 +100,7 @@ const EditLecture = () => {
                 </div>
 
                 <div className="mb-6">
-                    <button
-                        onClick={() => deleteLecture(lectureId)}
-                        disabled={deleteLectureLoading}
-                        className="px-4 py-2 bg-red-500 text-white rounded shadow-md hover:bg-red-700"
-                    >
-                        {deleteLectureLoading ? 'Deleting...' : 'Remove Lecture'}
-                    </button>
+                    <WarningModal onConfirm ={()=>deleteLecture(lectureId)} loading = {isLoading} text = {'Delete Lecture'} />
                 </div>
 
                 <form onSubmit={editLectureHandler}>
@@ -128,14 +123,6 @@ const EditLecture = () => {
                             id="videoUpload"
                             onChange={fileChangeHandler}
                             className="border rounded p-3 mt-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
-
-                    <div className="mb-6">
-                        <Switch
-                            checked={isPreviewFree}
-                            onChange={() => setIsPreviewFree(!isPreviewFree)}
-                            label="Is this video FREE?"
                         />
                     </div>
 

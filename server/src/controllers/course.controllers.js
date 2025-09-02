@@ -118,8 +118,8 @@ const getAllCourses = asyncHandler(async (req, res) => {
 })
 
 const getCourseById = asyncHandler(async (req, res) => {
-    const courseId = req.params.id;
-
+    const { courseId } = req.params;
+    
     const course = await Course.findById(courseId);
 
     if (!course) {

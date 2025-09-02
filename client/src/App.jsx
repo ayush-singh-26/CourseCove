@@ -2,14 +2,15 @@ import './App.css'
 import Navbar from './components/Navbar'
 import { Outlet } from 'react-router-dom'
 import Footer from './components/Footer'
-import { Toaster } from 'react-hot-toast';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
   return (
     <div className="">
       <Navbar />
-      <Toaster position="top-right" reverseOrder={false} />
+      <ToastContainer position="top-right" hideProgressBar={true} />
       <Outlet />
       <Footer />
     </div>

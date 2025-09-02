@@ -25,7 +25,7 @@ const courseSchema = new Schema(
             type:String,
         },
         enrolledStudents:[{
-            type: Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId, 
             ref:'User'
         }],
         lectures:[
